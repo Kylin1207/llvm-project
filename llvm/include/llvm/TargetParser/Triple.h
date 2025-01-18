@@ -107,6 +107,7 @@ public:
     renderscript32, // 32-bit RenderScript
     renderscript64, // 64-bit RenderScript
     ve,             // NEC SX-Aurora Vector Engine
+    cpu0,           // CPU0: CPU0 32-bit
     LastArchType = ve
   };
   enum SubArchType {
@@ -1017,6 +1018,11 @@ public:
   /// Tests whether the target is eBPF.
   bool isBPF() const {
     return getArch() == Triple::bpfel || getArch() == Triple::bpfeb;
+  }
+
+  /// Tests whether the target is CPU0 32-bit (big endian).
+  bool isCpu0() const {
+    return getArch() == Triple::cpu0;
   }
 
   /// Tests whether the target supports comdat

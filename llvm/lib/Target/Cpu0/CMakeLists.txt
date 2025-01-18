@@ -4,6 +4,7 @@ add_llvm_target(Cpu0CodeGen
   Cpu0TargetMachine.cpp
 
   LINK_COMPONENTS
+  MC
   Support
   Cpu0Info
   Cpu0Desc

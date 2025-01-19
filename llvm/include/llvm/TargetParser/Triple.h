@@ -16,6 +16,7 @@
 // this file.  Undefine them here.
 #undef NetBSD
 #undef mips
+#undef cpu0
 #undef sparc
 
 namespace llvm {
@@ -65,6 +66,8 @@ public:
     mipsel,         // MIPSEL: mipsel, mipsallegrexe, mipsr6el
     mips64,         // MIPS64: mips64, mips64r6, mipsn32, mipsn32r6
     mips64el,       // MIPS64EL: mips64el, mips64r6el, mipsn32el, mipsn32r6el
+    cpu0,           // CPU0: CPU0 32-bit big endian
+    cpu0el,         // CPU0: CPU0 32-bit little endian
     msp430,         // MSP430: msp430
     ppc,            // PPC: powerpc
     ppcle,          // PPCLE: powerpc (little endian)
@@ -107,7 +110,6 @@ public:
     renderscript32, // 32-bit RenderScript
     renderscript64, // 64-bit RenderScript
     ve,             // NEC SX-Aurora Vector Engine
-    cpu0,           // CPU0: CPU0 32-bit
     LastArchType = ve
   };
   enum SubArchType {
@@ -925,6 +927,11 @@ public:
     return isMIPS32() || isMIPS64();
   }
 
+  /// Tests whether the target is CPU0 32-bit.
+  bool isCPU032() const {
+    return getArch() == Triple::cpu0 || getArch() == Triple::cpu0el;
+  }
+
   /// Tests whether the target is PowerPC (32- or 64-bit LE or BE).
   bool isPPC() const {
     return getArch() == Triple::ppc || getArch() == Triple::ppc64 ||
@@ -1018,11 +1025,6 @@ public:
   /// Tests whether the target is eBPF.
   bool isBPF() const {
     return getArch() == Triple::bpfel || getArch() == Triple::bpfeb;
-  }
-
-  /// Tests whether the target is CPU0 32-bit (big endian).
-  bool isCpu0() const {
-    return getArch() == Triple::cpu0;
   }
 
   /// Tests whether the target supports comdat
